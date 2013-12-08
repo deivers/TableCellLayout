@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4510" systemVersion="12F37" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="rS3-R9-Ivy">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="13A603" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="rS3-R9-Ivy">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3742"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
     </dependencies>
     <scenes>
         <!--Navigation Controller-->
@@ -69,23 +69,23 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IZV-dn-LDM">
-                                            <rect key="frame" x="0.0" y="0.0" width="85" height="85"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="85" height="70"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="1bz-PQ-bD9">
-                                                    <rect key="frame" x="5" y="5" width="75" height="75"/>
+                                                    <rect key="frame" x="5" y="5" width="75" height="60"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="75" id="lqn-AS-NQh"/>
-                                                        <constraint firstAttribute="height" constant="75" id="uBD-jP-eaH"/>
+                                                        <constraint firstAttribute="height" constant="60" id="uBD-jP-eaH"/>
                                                     </constraints>
                                                 </imageView>
                                             </subviews>
                                             <color key="backgroundColor" red="0.0" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="calibratedRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="centerY" secondItem="1bz-PQ-bD9" secondAttribute="centerY" id="QsM-d1-3Kt"/>
-                                                <constraint firstAttribute="height" constant="85" id="jQ6-VC-guU"/>
+                                                <constraint firstAttribute="height" constant="70" id="jQ6-VC-guU"/>
                                                 <constraint firstAttribute="width" constant="85" id="l75-Cw-0gZ"/>
                                                 <constraint firstAttribute="centerX" secondItem="1bz-PQ-bD9" secondAttribute="centerX" id="m5Z-8T-G7y"/>
                                             </constraints>
