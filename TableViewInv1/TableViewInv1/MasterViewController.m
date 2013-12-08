@@ -10,8 +10,9 @@
 #import "DetailViewController.h"
 
 #define APOSITIVENUMBER 10
-//#define FIX_WORD_WRAP
-//#define FIX_CELL_HEIGHT
+#define FIX_CELL_WIDTH
+#define FIX_WORD_WRAP
+#define FIX_CELL_HEIGHT
 //#define FIX_HEADER_HEIGHT
 
 
@@ -36,6 +37,22 @@
         [_objects addObject:@"abc def ghi abc def ghi abc def ghi abc def ghi jkl"];
         [_objects addObject:@"123 456 789 123 456 789"];
     }
+}
+
+-(void)viewDidAppear:(BOOL)animated {
+    [self resetHeaderView];
+}
+
+-(void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
+    [self resetHeaderView];
+}
+
+-(void)resetHeaderView {
+#ifdef FIX_HEADER_HEIGHT
+    self.tableView.tableHeaderView = nil;
+    self.tableView.tableHeaderView = self.headerView; // workaround for the fact that reloadData does not reset the table header height
+#endif
+    [self.tableView reloadData];
 }
 
 - (void)insertNewObject:(id)sender {
@@ -67,12 +84,16 @@
     [self.nominalCell populateCell:_objects[indexPath.row]];
     [self.nominalCell setNeedsLayout];
     [self.nominalCell layoutIfNeeded];
-    CGFloat cellHeight = [self.nominalCell.contentView systemLayoutSizeFittingSize:CGSizeMake(tableView.frame.size.width, CGFLOAT_MAX)].height;
+    CGFloat cellHeight = [self cellHeightResultingFromWidthSetTo:tableView.frame.size.width];
     NSLog(@"  %@:%@:%d\n    %f",[self class],NSStringFromSelector(_cmd),__LINE__, cellHeight);
     return cellHeight;
 }
 
-- (MasterViewCell *)nominalCell {
+-(CGFloat)cellHeightResultingFromWidthSetTo:(CGFloat)newWidth {
+    return [self.nominalCell.contentView systemLayoutSizeFittingSize:CGSizeMake(newWidth, CGFLOAT_MAX)].height;
+}
+
+-(MasterViewCell *)nominalCell {
     if (!_nominalCell) {
         _nominalCell = (MasterViewCell*)[self.tableView dequeueReusableCellWithIdentifier:@"thecell"];  // get a nominal cell for the purpose of layout and cell height
     }
@@ -81,14 +102,6 @@
     return _nominalCell;
 }
 #endif
-
--(void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
-#ifdef FIX_HEADER_HEIGHT
-    self.tableView.tableHeaderView = nil;
-    self.tableView.tableHeaderView = self.headerView; // workaround for the fact that reloadData does not reset the table header height
-#endif
-    [self.tableView reloadData];
-}
 
 @end
 
@@ -102,11 +115,13 @@
 
 - (void)layoutSubviews {
     // see WWDC2012 #228 46 minute mark
+#ifdef FIX_CELL_WIDTH
     [super layoutSubviews];
+#endif
 #ifdef FIX_WORD_WRAP
-    //NSLog(@"width before: %f",self.label2.preferredMaxLayoutWidth);
+    NSLog(@"cell label width before: %f",self.label2.preferredMaxLayoutWidth);
     self.label2.preferredMaxLayoutWidth = self.label2.frame.size.width;
-    //NSLog(@"width after:  %f",self.label2.preferredMaxLayoutWidth);
+    NSLog(@"cell label width after:  %f",self.label2.preferredMaxLayoutWidth);
 #endif
 }
 
@@ -119,9 +134,9 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
 #ifdef FIX_WORD_WRAP
-    //NSLog(@"width before: %f",self.label0.preferredMaxLayoutWidth);
+    NSLog(@"header label width before: %f",self.label0.preferredMaxLayoutWidth);
     self.label0.preferredMaxLayoutWidth = self.label0.frame.size.width;
-    //NSLog(@"width after:  %f",self.label0.preferredMaxLayoutWidth);
+    NSLog(@"header label width after:  %f",self.label0.preferredMaxLayoutWidth);
 #endif
 #ifdef FIX_HEADER_HEIGHT
     CGFloat viewHeight = (self.superview.frame.size.width > 320) ? 80 : 100;
