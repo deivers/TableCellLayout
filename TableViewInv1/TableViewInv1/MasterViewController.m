@@ -53,6 +53,7 @@
     self.tableView.tableHeaderView = nil;
     self.tableView.tableHeaderView = self.headerView; // workaround for the fact that reloadData does not reset the table header height
 #endif
+    NSLog(@"  %@:%@:%d\n    Reloading table",[self class],NSStringFromSelector(_cmd),__LINE__);
     [self.tableView reloadData];
 }
 
@@ -86,7 +87,7 @@
     [self.nominalCell setNeedsLayout];
     [self.nominalCell layoutIfNeeded];
     CGFloat cellHeight = [self cellHeightResultingFromWidthSetTo:tableView.frame.size.width];
-    NSLog(@"  %@:%@:%d\n    %f",[self class],NSStringFromSelector(_cmd),__LINE__, cellHeight);
+    NSLog(@"  %@:%@:%d\n    cell height that hugs content: %f",[self class],NSStringFromSelector(_cmd),__LINE__, cellHeight);
     return cellHeight;
 }
 
@@ -120,9 +121,9 @@
     [super layoutSubviews];
 #endif
 #ifdef FIX_WORD_WRAP
-    NSLog(@"cell label width before: %f",self.label2.preferredMaxLayoutWidth);
+    NSLog(@"  %@:%@:%d\n    cell label width before: %f",[self class],NSStringFromSelector(_cmd),__LINE__,self.label2.preferredMaxLayoutWidth);
     self.label2.preferredMaxLayoutWidth = self.label2.frame.size.width;
-    NSLog(@"cell label width after:  %f",self.label2.preferredMaxLayoutWidth);
+    NSLog(@"  %@:%@:%d\n    cell label width after: %f",[self class],NSStringFromSelector(_cmd),__LINE__,self.label2.preferredMaxLayoutWidth);
 #endif
 }
 
@@ -135,15 +136,15 @@
 -(void)layoutSubviews {
     [super layoutSubviews];
 #ifdef FIX_WORD_WRAP
-    NSLog(@"header label width before: %f",self.label0.preferredMaxLayoutWidth);
+    NSLog(@"  %@:%@:%d\n    header label width before: %f",[self class],NSStringFromSelector(_cmd),__LINE__,self.label0.preferredMaxLayoutWidth);
     self.label0.preferredMaxLayoutWidth = self.label0.frame.size.width;
-    NSLog(@"header label width after:  %f",self.label0.preferredMaxLayoutWidth);
+    NSLog(@"  %@:%@:%d\n    header label width after: %f",[self class],NSStringFromSelector(_cmd),__LINE__,self.label0.preferredMaxLayoutWidth);
 #endif
 #ifdef FIX_HEADER_HEIGHT
     CGFloat viewHeight = (self.superview.frame.size.width > 320) ? 80 : 100;
     self.frame = CGRectMake(0, 0, self.superview.frame.size.width, viewHeight);
     [super layoutSubviews];
-    NSLog(@"  %@:%@:%d\n    width: %f  height: %f",[self class],NSStringFromSelector(_cmd),__LINE__, self.frame.size.width, self.frame.size.height);
+    NSLog(@"  %@:%@:%d\n    header width: %f  height: %f",[self class],NSStringFromSelector(_cmd),__LINE__, self.frame.size.width, self.frame.size.height);
 #endif
 }
 
