@@ -23,14 +23,15 @@
 
 @implementation MasterViewController
 
-- (void)awakeFromNib {
+-(void)awakeFromNib {
     [super awakeFromNib];
 }
 
-- (void)viewDidLoad {
+-(void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
-    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
+    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
+                                                                               target:self action:@selector(insertNewObject:)];
     self.navigationItem.rightBarButtonItem = addButton;
     if (!_objects) {
         _objects = [[NSMutableArray alloc] init];
@@ -109,11 +110,11 @@
 
 @implementation MasterViewCell
 
-- (void)populateCell:(NSString *)displayString {
+-(void)populateCell:(NSString *)displayString {
     self.label2.text = displayString;
 }
 
-- (void)layoutSubviews {
+-(void)layoutSubviews {
     // see WWDC2012 #228 46 minute mark
 #ifdef FIX_CELL_WIDTH
     [super layoutSubviews];
@@ -131,7 +132,7 @@
 
 @implementation HeaderView
 
-- (void)layoutSubviews {
+-(void)layoutSubviews {
     [super layoutSubviews];
 #ifdef FIX_WORD_WRAP
     NSLog(@"header label width before: %f",self.label0.preferredMaxLayoutWidth);

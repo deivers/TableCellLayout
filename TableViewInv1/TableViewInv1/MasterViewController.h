@@ -25,7 +25,7 @@
 @property (nonatomic, weak) IBOutlet UILabel *label2;
 @property (nonatomic, weak) IBOutlet UILabel *label3;
 
-- (void)populateCell:(NSString *)displayString;
+-(void)populateCell:(NSString *)displayString;
 
 @end
 
