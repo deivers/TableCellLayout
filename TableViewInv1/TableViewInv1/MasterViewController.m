@@ -41,14 +41,15 @@
 }
 
 -(void)viewDidAppear:(BOOL)animated {
-    [self resetHeaderView];
+    if (UIInterfaceOrientationIsLandscape([UIApplication sharedApplication].statusBarOrientation))
+        [self resetHeaderAndReload];
 }
 
 -(void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
-    [self resetHeaderView];
+    [self resetHeaderAndReload];
 }
 
--(void)resetHeaderView {
+-(void)resetHeaderAndReload {
 #ifdef FIX_HEADER_HEIGHT
     self.tableView.tableHeaderView = nil;
     self.tableView.tableHeaderView = self.headerView; // workaround for the fact that reloadData does not reset the table header height
@@ -75,6 +76,7 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     MasterViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"thecell"];
+    NSLog(@"  %@:%@:%d\n    cell width: %f",[self class],NSStringFromSelector(_cmd),__LINE__,cell.frame.size.width);
     [cell populateCell:_objects[indexPath.row]];
     return cell;
 }
