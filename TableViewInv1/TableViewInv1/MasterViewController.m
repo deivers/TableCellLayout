@@ -11,7 +11,6 @@
 
 #define APOSITIVENUMBER 10
 
-//#define FIX_CELL_WIDTH
 //#define FIX_WORD_WRAP
 //#define FIX_CELL_HEIGHT
 //#define FIX_HEADER_HEIGHT
@@ -120,9 +119,7 @@
 
 -(void)layoutSubviews {
     // see WWDC2012 #228 46 minute mark
-#ifdef FIX_CELL_WIDTH
     [super layoutSubviews];
-#endif
 #ifdef FIX_WORD_WRAP
     NSLog(@"  %@:%@:%d\n    cell label width before: %f",[self class],NSStringFromSelector(_cmd),__LINE__,self.label2.preferredMaxLayoutWidth);
     self.label2.preferredMaxLayoutWidth = self.label2.frame.size.width;
