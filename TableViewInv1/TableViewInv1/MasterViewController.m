@@ -10,9 +10,10 @@
 #import "DetailViewController.h"
 
 #define APOSITIVENUMBER 10
-#define FIX_CELL_WIDTH
-#define FIX_WORD_WRAP
-#define FIX_CELL_HEIGHT
+
+//#define FIX_CELL_WIDTH
+//#define FIX_WORD_WRAP
+//#define FIX_CELL_HEIGHT
 //#define FIX_HEADER_HEIGHT
 
 
