@@ -11,8 +11,9 @@
 
 #define APOSITIVENUMBER 10
 
-//#define FIX_WORD_WRAP
-//#define FIX_CELL_HEIGHT
+#define FIX_WORD_WRAP
+#define FIX_CELL_HEIGHT
+//#define FIX_CELL_DEQUEUED_WIDTH
 //#define FIX_HEADER_HEIGHT
 
 
@@ -101,8 +102,9 @@
     if (!_nominalCell) {
         _nominalCell = (MasterViewCell*)[self.tableView dequeueReusableCellWithIdentifier:@"thecell"];  // get a nominal cell for the purpose of layout and cell height
     }
+#ifdef FIX_CELL_DEQUEUED_WIDTH
     _nominalCell.frame = CGRectMake(0, 0, self.tableView.frame.size.width, APOSITIVENUMBER); // workaround for Apple bug - dequeued cell width doesn't match table width in landscape
-    _nominalCell.contentView.frame = CGRectMake(0, 0, self.tableView.frame.size.width, APOSITIVENUMBER); // workaround for Apple bug - dequeued cell width doesn't match table width in landscape
+#endif
     return _nominalCell;
 }
 #endif
@@ -121,9 +123,7 @@
     // see WWDC2012 #228 46 minute mark
     [super layoutSubviews];
 #ifdef FIX_WORD_WRAP
-    NSLog(@"  %@:%@:%d\n    cell label width before: %f",[self class],NSStringFromSelector(_cmd),__LINE__,self.label2.preferredMaxLayoutWidth);
     self.label2.preferredMaxLayoutWidth = self.label2.frame.size.width;
-    NSLog(@"  %@:%@:%d\n    cell label width after: %f",[self class],NSStringFromSelector(_cmd),__LINE__,self.label2.preferredMaxLayoutWidth);
 #endif
 }
 
@@ -136,15 +136,12 @@
 -(void)layoutSubviews {
     [super layoutSubviews];
 #ifdef FIX_WORD_WRAP
-    NSLog(@"  %@:%@:%d\n    header label width before: %f",[self class],NSStringFromSelector(_cmd),__LINE__,self.label0.preferredMaxLayoutWidth);
     self.label0.preferredMaxLayoutWidth = self.label0.frame.size.width;
-    NSLog(@"  %@:%@:%d\n    header label width after: %f",[self class],NSStringFromSelector(_cmd),__LINE__,self.label0.preferredMaxLayoutWidth);
 #endif
 #ifdef FIX_HEADER_HEIGHT
     CGFloat viewHeight = (self.superview.frame.size.width > 320) ? 80 : 100;
     self.frame = CGRectMake(0, 0, self.superview.frame.size.width, viewHeight);
     [super layoutSubviews];
-    NSLog(@"  %@:%@:%d\n    header width: %f  height: %f",[self class],NSStringFromSelector(_cmd),__LINE__, self.frame.size.width, self.frame.size.height);
 #endif
 }
 
