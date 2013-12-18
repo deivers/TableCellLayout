@@ -88,13 +88,13 @@
     [self.nominalCell populateCell:_objects[indexPath.row]];
     [self.nominalCell setNeedsLayout];
     [self.nominalCell layoutIfNeeded];
-    CGFloat cellHeight = [self cellHeightResultingFromWidthSetTo:tableView.frame.size.width];
+    CGFloat cellHeight = [self cellHeightThatFits:tableView.frame.size.width];
     NSLog(@"  %@:%@:%d\n    cell height that hugs content: %f",[self class],NSStringFromSelector(_cmd),__LINE__, cellHeight);
     return cellHeight;
 }
 
--(CGFloat)cellHeightResultingFromWidthSetTo:(CGFloat)newWidth {
-    return [self.nominalCell.contentView systemLayoutSizeFittingSize:CGSizeMake(newWidth, CGFLOAT_MAX)].height;
+-(CGFloat)cellHeightThatFits:(CGFloat)width {
+    return [self.nominalCell.contentView systemLayoutSizeFittingSize:CGSizeMake(width, CGFLOAT_MAX)].height;
 }
 
 -(MasterViewCell *)nominalCell {
