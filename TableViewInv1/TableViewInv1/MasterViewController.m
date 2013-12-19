@@ -41,14 +41,16 @@
     }
 }
 
+#ifdef RELOAD_ON_ROTATION
 -(void)viewDidAppear:(BOOL)animated {
     if (UIInterfaceOrientationIsLandscape([UIApplication sharedApplication].statusBarOrientation))
-        [self resetHeaderAndReload];
+        [self resetHeaderAndReload];        // fix for when the table initially loads in landscape
 }
 
 -(void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
     [self resetHeaderAndReload];
 }
+#endif
 
 -(void)resetHeaderAndReload {
 #ifdef FIX_HEADER_HEIGHT
@@ -90,7 +92,7 @@
     [self.nominalCell setNeedsLayout];
     [self.nominalCell layoutIfNeeded];
     CGFloat cellHeight = [self cellHeightThatFits:tableView.frame.size.width];
-    NSLog(@"  %@:%@:%d\n    cell height that hugs content: %f",[self class],NSStringFromSelector(_cmd),__LINE__, cellHeight);
+    NSLog(@"  %@:%@:%d\n    cell height that hugs content: %f  for width: %f",[self class],NSStringFromSelector(_cmd),__LINE__, cellHeight, tableView.frame.size.width);
     return cellHeight;
 }
 
@@ -102,9 +104,7 @@
     if (!_nominalCell) {
         _nominalCell = (MasterViewCell*)[self.tableView dequeueReusableCellWithIdentifier:@"thecell"];  // get a nominal cell for the purpose of layout and cell height
     }
-#ifdef FIX_CELL_DEQUEUED_WIDTH
-    _nominalCell.frame = CGRectMake(0, 0, self.tableView.frame.size.width, APOSITIVENUMBER); // workaround for Apple bug - dequeued cell width doesn't match table width in landscape
-#endif
+    _nominalCell.frame = CGRectMake(0, 0, self.tableView.frame.size.width, APOSITIVENUMBER);  // make sure the cell has the same with that the table currently has
     return _nominalCell;
 }
 #endif
@@ -139,7 +139,7 @@
     self.label0.preferredMaxLayoutWidth = self.label0.frame.size.width;
 #endif
 #ifdef FIX_HEADER_HEIGHT
-    CGFloat viewHeight = (self.superview.frame.size.width > 320) ? 80 : 100;
+    CGFloat viewHeight = (self.superview.frame.size.width > 320) ? 80 : 100;  // todo: figure out how to get height from the layout system
     self.frame = CGRectMake(0, 0, self.superview.frame.size.width, viewHeight);
     [super layoutSubviews];
 #endif
